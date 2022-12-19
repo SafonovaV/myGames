@@ -10,6 +10,7 @@ import { setScore } from '../../store/UserScore/creators';
 
 import { Button, InputGroup } from 'react-bootstrap';
 
+
 export default function Board() {
   const board = useSelector((store) => store.board.board);
   const topics = useSelector((store) => store.board.topics);
@@ -73,6 +74,7 @@ export default function Board() {
                   <div className={cl.scoreBlock}>
                   <div  onClick={() => {
                       getQuestion(quest);
+                      console.log("OPEN MODAL BUTTON");
                     }} key={quest.id} data-id={quest.id}>
 
                     {quest.score}

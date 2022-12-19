@@ -1,26 +1,58 @@
-import React, { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
+import 'react-circular-progressbar/dist/styles.css';
 
-export default function Timer() {
+function Timer({ initValue, setStat }) {
 
-  // useEffect(() => {
-  //   (async () => {
-  //     try {
-  //       const response = await fetch('http://localhost:3100/boardApi', {
-  //         method: 'GET',
-  //         credentials: 'include',
-  //       });
-  //       const { allBord, allTopics } = await response.json();
+  const [currentTime, setCurrentTime] = useState(initValue)
+  let totalTime = initValue
+  let timeValue = (100 - (currentTime / totalTime) * 100)
 
-  //       console.log('topics', topics);
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   })();
-  // }, []);
+  useEffect(() => {
+    if (currentTime === 0) {
+      setCurrentTime(0);
+      setTimeout(() => {
+        // setStat(false)
+        return
+      }, 1000)
+    } else {
+      const timer = setTimeout(() => {
+        setCurrentTime((value) => {
+          value = value - 1
+          return value
+        })
+      }, 1000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [currentTime])
+
+  // Цвет полосы
+  // let lineColor = '#D91E18'// красный
+  let lineColor = '#37745B' // зеленый
+  if (timeValue > 60) lineColor = '#D91E18'
+  const styles =
+    buildStyles({
+      textSize: "20px",
+      // Colors
+      pathColor: lineColor,
+      textColor: 'Black',
+      // fontWeight: '800',
+      fontWeight: '900',
+      trailColor: '#d6d6d6',
+      // trailColor: '#D91E18',
+      backgroundColor: '#3e98c7',
+    })
 
   return (
     <>
-
+      <div className='progress-wrap'>
+        <div className="circle">
+          <CircularProgressbar value={timeValue} text={currentTime + ''} styles={styles} />
+        </div>
+      </div>
     </>
   );
 }
+
+export default Timer;
