@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setVisModalFalse } from '../../store/modal/creators';
 
 export default function Modal() {
+    
   const rootClasses = [cl.myModal];
   const visible = useSelector((store) => store.modal.modal.visible);
   const dispatch = useDispatch();
