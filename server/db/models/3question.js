@@ -8,6 +8,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   Question.init(
     {
+      topicId: DataTypes.INTEGER,
       question: DataTypes.STRING,
       answer: DataTypes.STRING,
       score: DataTypes.INTEGER,
