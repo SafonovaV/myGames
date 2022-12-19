@@ -6,6 +6,7 @@ const cors = require('cors');
 const path = require('path');
 require('dotenv').config();
 const authRouter = require('./routes/authRouter');
+const statRouter = require('./routes/statRouter');
 
 //импорт вспомогательных ф-й
 const dbCheck = require('../db/dbCheck');
@@ -47,6 +48,7 @@ const sessionConfig = {
 // мидлварка для сессии
 app.use(session(sessionConfig));
 app.use('/', authRouter);
+app.use('/statistic', statRouter)
 
 const PORT = process.env.PORT || 3101;
 app.listen(PORT, (err) => {

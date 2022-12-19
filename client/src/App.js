@@ -5,6 +5,7 @@ import NavBar from './components/NavBar/NavBar';
 import Home from './components/Home/Home';
 import Signup from './components/Signup/Signup';
 import { initAuthAC, setNullAC } from './store/auth/creators';
+import StatisticPage from './components/Statistics/StatisticPage';
 
 function App() {
   const dispatch = useDispatch();
@@ -26,6 +27,7 @@ function App() {
         console.log(error);
       }
     })();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -35,6 +37,7 @@ function App() {
         <Route path="/" element={<Home />} />
         {/* <Route path="/login" element={<Login />} /> */}
         <Route path="/signup" element={<Signup />} />
+        <Route path="/statistic" element={<StatisticPage />} />
       </Routes>
     </>
   );
