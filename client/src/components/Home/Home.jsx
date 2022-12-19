@@ -2,6 +2,9 @@ import React from 'react';
 // import Modal from '../Modal/Modal';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import { initStatusQuestions } from '../../store/statusQuestions/creators';
+import { setScore } from '../../store/UserScore/creators';
+
 export default function Home() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -15,8 +18,10 @@ export default function Home() {
         },
         body: null,
       });
-      const { userScore, arrStatusQuestions } = response.json();
-      dispatch()
+      const { userScore, arrStatusQuestions } = await response.json();
+      dispatch(initStatusQuestions(arrStatusQuestions));
+      dispatch(setScore(userScore.totalScore));
+      navigate('/board');
     })();
   };
 
@@ -24,7 +29,7 @@ export default function Home() {
     <>
       <div>
         Главная страница!
-        <button type="button" onClick={() => navigate('/board')}>
+        <button type="button" onClick={() => startGame()}>
           Играть
         </button>
       </div>

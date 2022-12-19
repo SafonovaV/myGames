@@ -1,6 +1,6 @@
 const express = require('express');
 const route = express.Router();
-const { Statistic } = require('../../db/models');
+const { Statistic, User_question } = require('../../db/models');
 
 route.post('/new', async (req, res) => {
   try {
@@ -21,6 +21,25 @@ route.post('/new', async (req, res) => {
     });
     console.log('arrStatusQuestions', arrStatusQuestions);
     console.log('userScore', userScore);
+    res.json({ arrStatusQuestions, userScore });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+route.get('/', async (req, res) => {
+  try {
+    const { user } = req.session;
+    const allUserScore = await Statistic.findAll({
+      where: { user_id: user.id },
+      order: [['createdAt', 'DESC']],
+    });
+    const userScore = allUserScore[0];
+    console.log('userScore ==========>', allUserScore);
+
+    const arrStatusQuestions = await User_question.findAll({
+      where: { user_id: user.id },
+    });
     res.json({ arrStatusQuestions, userScore });
   } catch (error) {
     console.log(error);
