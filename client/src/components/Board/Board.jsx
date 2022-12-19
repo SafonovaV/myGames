@@ -50,46 +50,48 @@ export default function Board() {
 
   return (
     <>
-
       <div className={cl.boardContent}>
         <div className={cl.boardHead}>
-          <Button className={cl.bhBlock} type="button" variant="primary">Остановить игру</Button>{' '}
-          <InputGroup.Text className={cl.bhBlock} id="inputGroup-sizing-default">
+          <Button className={cl.bhBlock} type="button" variant="primary">
+            Остановить игру
+          </Button>{' '}
+          <InputGroup.Text
+            className={cl.bhBlock}
+            id="inputGroup-sizing-default"
+          >
             Очков: {score}
           </InputGroup.Text>
           {/* <input defaultValue="Очков: 2100" className={cl.bhBlock} /> */}
-
-      </div>
-      {board.length && topics.length ? (
-          <div className={cl.tableWrap}>
-        <div className={cl.table}>
-          {topics.map((top) => (
-            <div key={top.id} className={cl.tableRow}>
-              <div className={cl.row_topic}>{top.topic}</div>
-              {board
-                .filter((el) => el.topic_id === top.id)
-                .map((quest) => (
-
-                  <div className={cl.scoreBlock}>
-                  <div  onClick={() => {
-                      getQuestion(quest);
-                    }} key={quest.id} data-id={quest.id}>
-
-                    {quest.score}
-                  </div>
-
-                  </div>
-                ))}
-            </div>
-          ))}
         </div>
+        {board.length && topics.length ? (
+          <div className={cl.tableWrap}>
+            <div className={cl.table}>
+              {topics.map((top) => (
+                <div key={top.id} className={cl.tableRow}>
+                  <div className={cl.row_topic}>{top.topic}</div>
+                  {board
+                    .filter((el) => el.topic_id === top.id)
+                    .map((quest) => (
+                      <div key={quest.id} className={cl.scoreBlock}>
+                        <div
+                          onClick={() => {
+                            getQuestion(quest);
+                          }}
+                          data-id={quest.id}
+                        >
+                          {quest.score}
+                        </div>
+                      </div>
+                    ))}
+                </div>
+              ))}
+            </div>
           </div>
+        ) : (
+          <div>Масиив пустой</div>
+        )}
 
-      ) : (
-        <div>Масиив пустой</div>
-      )}
-
-      <Modal />
+        <Modal />
       </div>
     </>
   );

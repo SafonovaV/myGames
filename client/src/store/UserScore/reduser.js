@@ -19,7 +19,7 @@ export default function UserScore(state = initialState, action) {
     case tp.DECREMENT_SCORE:
       return {
         ...state,
-        score: state.score + action.payload,
+        score: state.score - action.payload,
       };
 
     default:

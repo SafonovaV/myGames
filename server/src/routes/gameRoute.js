@@ -49,11 +49,40 @@ route.get('/', async (req, res) => {
 route.put('/scoreAndstatus', async (req, res) => {
   try {
     const { user } = req.session;
+    const { activQuestion } = req.body;
     const userScore = await Statistic.findAll({
       where: { user_id: user.id },
       order: [['createdAt', 'DESC']],
       limit: 1,
     });
+    await userScore[0].increment({ totalScore: activQuestion.score });
+    await User_question.update(
+      { status: true },
+      { where: { question_id: activQuestion.id } }
+    );
+    console.log('userScore', userScore);
+    res.sendStatus(200);
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+route.put('/decscoreAndstatus', async (req, res) => {
+  try {
+    const { user } = req.session;
+    const { activQuestion } = req.body;
+    const userScore = await Statistic.findAll({
+      where: { user_id: user.id },
+      order: [['createdAt', 'DESC']],
+      limit: 1,
+    });
+    await userScore[0].increment({ totalScore: -activQuestion.score });
+    await User_question.update(
+      { status: true },
+      { where: { question_id: activQuestion.id } }
+    );
+    console.log('userScore', userScore);
+    res.sendStatus(200);
   } catch (error) {
     console.log(error);
   }
