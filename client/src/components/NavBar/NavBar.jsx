@@ -49,7 +49,9 @@ export default function NavBar() {
             </NavLink>
           </li>
           <li>
-            <NavLink className={cl.nav_navLink}>Войти </NavLink>
+            <NavLink to="/login" className={cl.nav_navLink}>
+              Войти{' '}
+            </NavLink>
           </li>
           <li>
             <NavLink to="/signup" className={cl.nav_navLink}>
