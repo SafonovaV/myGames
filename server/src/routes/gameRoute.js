@@ -46,4 +46,17 @@ route.get('/', async (req, res) => {
   }
 });
 
+route.put('/scoreAndstatus', async (req, res) => {
+  try {
+    const { user } = req.session;
+    const UserScore = await Statistic.findAll({
+      where: { user_id: user.id },
+      order: [['createdAt', 'DESC']],
+      limit: 1,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
 module.exports = route;
