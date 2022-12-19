@@ -18,7 +18,6 @@ export default function Board() {
         const { allBord, allTopics } = await response.json();
         dispatch(initBoard(allBord));
         dispatch(initTopics(allTopics));
-        console.log('topics', topics);
       } catch (error) {
         console.log(error);
       }
