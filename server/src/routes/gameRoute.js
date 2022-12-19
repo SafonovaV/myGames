@@ -49,7 +49,7 @@ route.get('/', async (req, res) => {
 route.put('/scoreAndstatus', async (req, res) => {
   try {
     const { user } = req.session;
-    const UserScore = await Statistic.findAll({
+    const userScore = await Statistic.findAll({
       where: { user_id: user.id },
       order: [['createdAt', 'DESC']],
       limit: 1,
