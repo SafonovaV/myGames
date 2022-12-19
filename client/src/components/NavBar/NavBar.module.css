@@ -1,0 +1,44 @@
+.nav {
+  width: 960px;
+  margin: 0 auto 50px;
+}
+.nav:before {
+  content: '';
+  display: block;
+  height: 50px;
+  width: 100%;
+  background: black;
+  position: absolute;
+  left: 0;
+  z-index: -1;
+}
+
+.nav_ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  height: 50px;
+}
+
+.nav_ul li {
+  float: left;
+}
+
+.nav_navLink {
+  color: rgb(255, 255, 255);
+  display: block;
+  height: 50px;
+  padding: 0 10px;
+  text-transform: uppercase;
+  text-decoration: none;
+  line-height: 50px;
+}
+.nav_navLink:hover {
+  background-color: rgb(68, 23, 110);
+  color: white;
+}
+
+.active {
+  color: rgb(218, 160, 226);
+  cursor: default;
+}
