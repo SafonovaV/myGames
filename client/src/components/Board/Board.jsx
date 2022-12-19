@@ -1,8 +1,10 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-
+import './board.css'
 import { initBoard, initTopics } from '../../store/board/creators';
 import cl from './Board.module.css';
+import Card from 'react-bootstrap/Card';
+
 export default function Board() {
   const board = useSelector((store) => store.board.board);
   const topics = useSelector((store) => store.board.topics);
@@ -25,10 +27,15 @@ export default function Board() {
   }, []);
 
   return board.length && topics.length ? (
-    <div className={cl.table}>
+
+    <div className={cl.tableWrap}>
+      {/* // <div className="board-wrap"> */}
+      <div className={cl.table}>
       {topics.map((top) => (
         <div key={top.id} className={cl.row}>
+          <Card title>
           <div className={cl.row_topic}>{top.topic}</div>
+          </Card>
           {board
             .filter((el) => el.topic_id === top.id)
             .map((quest) => (
@@ -38,7 +45,9 @@ export default function Board() {
             ))}
         </div>
       ))}
+      </div>
     </div>
+
   ) : (
     <div>Масиив пустой</div>
   );
