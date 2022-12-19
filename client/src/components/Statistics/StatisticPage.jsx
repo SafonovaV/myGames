@@ -4,37 +4,15 @@ import { NavLink } from 'react-router-dom';
 function BackButton() {
   return (
     <NavLink to="/">
-      <button>Назад</button>
+      <button type="button" className="btn btn-primary">Назад</button>
     </NavLink>
   );
 }
 
-// let statistic = [ {
-//     user_id: 1,
-//     totalScore: 200,
-//   },
-//   {
-//     user_id: 1,
-//     totalScore: 400,
-//   },
-//   {
-//     user_id: 1,
-//     totalScore: 200,
-//   },
-//   {
-//     user_id: 1,
-//     totalScore: 600,
-//   },
-//   {
-//     user_id: 1,
-//     totalScore: 800,
-//   },
-//   {
-//     user_id: 1,
-//     totalScore: 400,
-//   }
-// ]
-
+function parseDate(createdAt) {
+  const date = new Date(Date.parse(createdAt));
+  return date;
+}
 
 function StatisticPage() {
   const [statistic, setStatistic] = useState(null);
@@ -48,27 +26,37 @@ function StatisticPage() {
       setStatistic(allStatistics) 
     })()
   }, []);
-  console.log(statistic);
+  // console.log(statistic);
 
+  
+
+
+  
 
   return (
-    <div>
+    <div className="container-sm">
       <BackButton>Назад</BackButton>
       {statistic ? (
         <div>
-          <h1>Статистика</h1>
-          <table>
-            <tr>
-              <th>ID пользователя</th>
+          <h1 className="text-center">Статистика</h1>
+          <table className="table table-striped table-bordered border-primary">
+          <thead >
+            <tr className="table-primary">
+              {/* <th>ID пользователя</th> */}
               <th>Общее количество очков</th>
-            </tr>
+              <th>Дата</th>
+            </tr >
+          </thead>
+          <tbody >
             {statistic.map(item => (
               <tr key={item.id}>
-                <td>{item.user_id}</td>
+                {/* <td>{item.user_id}</td> */}
                 <td>{item.totalScore}</td>
-                
+                <td>{parseDate(item.createdAt).toLocaleString()}</td>
+                               
               </tr>
             ))}
+            </tbody>
           </table>
         </div>
       ) : (
