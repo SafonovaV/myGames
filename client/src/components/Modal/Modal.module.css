@@ -1,0 +1,53 @@
+.myModal {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  display: none;
+}
+
+.myModalContent {
+  padding: 25px;
+  background: white;
+  border-radius: 16px;
+  width: 600px;
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.active {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.myInput {
+  width: 400px;
+  padding: 5px 15px;
+  margin: 5px 0;
+  border: 3px solid rgb(106, 165, 241);
+}
+
+.block {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  margin-bottom: 40px;
+  margin-top: 50px;
+}
+
+.block1 {
+  display: flex;
+  align-items: center;
+  gap: 350px;
+  margin-bottom: 60px;
+}
+
+.img {
+  width: 40px;
+}
