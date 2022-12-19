@@ -24,19 +24,17 @@ function StatisticPage() {
       });
       const { allStatistics } = await response.json();
       setStatistic(allStatistics) 
+      // console.log(statistic);
     })()
+
   }, []);
-  // console.log(statistic);
 
-  
-
-
-  
 
   return (
+    <>
     <div className="container-sm">
       <BackButton>Назад</BackButton>
-      {statistic ? (
+      {statistic !== null && statistic.length > 0 ? (
         <div>
           <h1 className="text-center">Статистика</h1>
           <table className="table table-striped table-bordered border-primary">
@@ -52,17 +50,17 @@ function StatisticPage() {
               <tr key={item.id}>
                 {/* <td>{item.user_id}</td> */}
                 <td>{item.totalScore}</td>
-                <td>{parseDate(item.createdAt).toLocaleString()}</td>
-                               
+                <td>{parseDate(item.createdAt).toLocaleString()}</td>               
               </tr>
             ))}
             </tbody>
           </table>
         </div>
       ) : (
-        <div>Загрузка статистики...</div>
+        <h3 className="text-center">У вас пока нет статистики ...</h3>
       )}
     </div>
+   </>
   );
 }
 
