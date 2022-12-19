@@ -1,14 +1,30 @@
 import React from 'react';
 import cl from './Modal.module.css';
+import { useSelector, useDispatch } from 'react-redux';
+import { setVisModalFalse } from '../../store/modal/creators';
 
 export default function Modal() {
+  const rootClasses = [cl.myModal];
+  const visible = useSelector((store) => store.modal.modal.visible);
+  const dispatch = useDispatch();
+  if (visible) {
+    rootClasses.push(cl.active);
+  }
+  const close = () => {
+    dispatch(setVisModalFalse());
+  };
   return (
-    <div className={[cl.myModal, cl.active].join(' ')}>
+    <div className={rootClasses.join(' ')}>
       <div className={cl.myModalContent}>
         <div className={cl.block1}>
           <div>Таймер 30 секунд</div>
           <div>
-            <img className={cl.img} src="/img/close.png" alt="закрыть" />
+            <img
+              onClick={close}
+              className={cl.img}
+              src="/img/close.png"
+              alt="закрыть"
+            />
           </div>
         </div>
         <h4>Вопрос:</h4>
