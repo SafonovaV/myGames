@@ -4,9 +4,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setVisModalFalse } from '../../store/modal/creators';
 
 export default function Modal() {
-    
   const rootClasses = [cl.myModal];
   const visible = useSelector((store) => store.modal.modal.visible);
+  const activQuestion = useSelector((store) => store.modal.modal.activQuestion);
   const dispatch = useDispatch();
   if (visible) {
     rootClasses.push(cl.active);
@@ -29,10 +29,7 @@ export default function Modal() {
           </div>
         </div>
         <h4>Вопрос:</h4>
-        <div>
-          По мнению Талейрана, этот напиток должен быть крепким, как негр,
-          черным, как ночь, и сладким, как первый поцелуй. Назовите его.
-        </div>
+        <div>{activQuestion.question}</div>
         <div className={cl.block}>
           {' '}
           <input type="text" className={cl.myInput} />

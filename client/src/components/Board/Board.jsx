@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-
+import Modal from '../Modal/Modal';
 import { initBoard, initTopics } from '../../store/board/creators';
 import cl from './Board.module.css';
+import { setVisModalTrue, initActivQuestion } from '../../store/modal/creators';
 export default function Board() {
   const board = useSelector((store) => store.board.board);
   const topics = useSelector((store) => store.board.topics);
@@ -24,6 +25,11 @@ export default function Board() {
     })();
   }, []);
 
+  const getQuestion = (quest) => {
+    dispatch(setVisModalTrue());
+    dispatch(initActivQuestion(quest));
+  };
+
   return (
     <>
       <div>
@@ -38,7 +44,13 @@ export default function Board() {
               {board
                 .filter((el) => el.topic_id === top.id)
                 .map((quest) => (
-                  <div key={quest.id} data-id={quest.id}>
+                  <div
+                    onClick={() => {
+                      getQuestion(quest);
+                    }}
+                    key={quest.id}
+                    data-id={quest.id}
+                  >
                     {quest.score}
                   </div>
                 ))}
@@ -48,6 +60,7 @@ export default function Board() {
       ) : (
         <div>Масиив пустой</div>
       )}
+      <Modal />
     </>
   );
 }
