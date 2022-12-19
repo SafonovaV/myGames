@@ -93,13 +93,18 @@ export default function Board() {
                     .filter((el) => el.topic_id === top.id)
                     .map((quest) => (
                       <div key={quest.id} className={cl.scoreBlock}>
-                        <div
-                          onClick={() => {
-                            getQuestion(quest);
-                          }}
-                        >
-                          {quest.score}
-                        </div>
+                        {status.find((el) => el.question_id === quest.id)
+                          ?.status ? (
+                          <div style={{ opacity: 0.33 }}>{quest.score}</div>
+                        ) : (
+                          <div
+                            onClick={() => {
+                              getQuestion(quest);
+                            }}
+                          >
+                            {quest.score}
+                          </div>
+                        )}
                       </div>
                     ))}
                 </div>
