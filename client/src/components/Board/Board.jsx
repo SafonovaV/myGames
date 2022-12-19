@@ -1,13 +1,21 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-
+import Modal from '../Modal/Modal';
 import { initBoard, initTopics } from '../../store/board/creators';
 import cl from './Board.module.css';
+
+import { setVisModalTrue, initActivQuestion } from '../../store/modal/creators';
+import { initStatusQuestions } from '../../store/statusQuestions/creators';
+import { setScore } from '../../store/UserScore/creators';
+
 import { Button, InputGroup } from 'react-bootstrap';
 
 export default function Board() {
   const board = useSelector((store) => store.board.board);
   const topics = useSelector((store) => store.board.topics);
+  const status = useSelector((store) => store.status.status);
+  const score = useSelector((store) => store.score.score);
+  console.log('score', score);
   const dispatch = useDispatch();
   useEffect(() => {
     (async () => {
@@ -19,22 +27,38 @@ export default function Board() {
         const { allBord, allTopics } = await response.json();
         dispatch(initBoard(allBord));
         dispatch(initTopics(allTopics));
-        console.log('topics', topics);
       } catch (error) {
         console.log(error);
       }
     })();
+
+    (async () => {
+      const response = await fetch('http://localhost:3100/game', {
+        method: 'GET',
+        credentials: 'include',
+      });
+      const { userScore, arrStatusQuestions } = await response.json();
+      dispatch(initStatusQuestions(arrStatusQuestions));
+      dispatch(setScore(userScore.totalScore));
+    })();
   }, []);
+
+  const getQuestion = (quest) => {
+    dispatch(setVisModalTrue());
+    dispatch(initActivQuestion(quest));
+  };
 
   return (
     <>
+
       <div className={cl.boardContent}>
         <div className={cl.boardHead}>
           <Button className={cl.bhBlock} type="button" variant="primary">Остановить игру</Button>{' '}
           <InputGroup.Text className={cl.bhBlock} id="inputGroup-sizing-default">
-            Очков: {'200'}
+            Очков: {score}
           </InputGroup.Text>
           {/* <input defaultValue="Очков: 2100" className={cl.bhBlock} /> */}
+
       </div>
       {board.length && topics.length ? (
           <div className={cl.tableWrap}>
@@ -45,8 +69,12 @@ export default function Board() {
               {board
                 .filter((el) => el.topic_id === top.id)
                 .map((quest) => (
+
                   <div className={cl.scoreBlock}>
-                  <div key={quest.id} data-id={quest.id}>
+                  <div  onClick={() => {
+                      getQuestion(quest);
+                    }} key={quest.id} data-id={quest.id}>
+
                     {quest.score}
                   </div>
 
@@ -60,6 +88,8 @@ export default function Board() {
       ) : (
         <div>Масиив пустой</div>
       )}
+
+      <Modal />
       </div>
     </>
   );

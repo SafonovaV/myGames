@@ -1,7 +1,7 @@
 import * as tp from './type';
 const initialState = {
   modal: {
-    visible: true,
+    visible: false,
     activQuestion: {},
   },
 };

@@ -1,13 +1,47 @@
-import React from 'react';
+import React, { useState } from 'react';
 import cl from './Modal.module.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { setVisModalFalse } from '../../store/modal/creators';
+import { setStatusTrue } from '../../store/statusQuestions/creators';
+import { incrementScore } from '../../store/UserScore/creators';
 
 export default function Modal() {
-    
   const rootClasses = [cl.myModal];
   const visible = useSelector((store) => store.modal.modal.visible);
+  const activQuestion = useSelector((store) => store.modal.modal.activQuestion);
   const dispatch = useDispatch();
+  const [inputValue, setInputValue] = useState({ answer: '' });
+  const [validAnswer, setValidAnswer] = useState(null);
+  const handleInput = (e) => {
+    setInputValue((pre) => {
+      return { ...pre, answer: e.target.value };
+    });
+  };
+
+  const checkedAnswer = async () => {
+    if (
+      inputValue.answer.toLowerCase().trim() ===
+      activQuestion.answer.toLowerCase().trim()
+    ) {
+      setValidAnswer(true);
+      const response = await fetch(
+        'http://localhost:3100/game/scoreAndstatus',
+        {
+          method: 'PUT',
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(activQuestion),
+        }
+      );
+      if (response.ok) {
+        dispatch(setStatusTrue(activQuestion.id));
+        dispatch(incrementScore(activQuestion.score));
+      }
+    }
+  };
+
   if (visible) {
     rootClasses.push(cl.active);
   }
@@ -29,19 +63,39 @@ export default function Modal() {
           </div>
         </div>
         <h4>Вопрос:</h4>
-        <div>
-          По мнению Талейрана, этот напиток должен быть крепким, как негр,
-          черным, как ночь, и сладким, как первый поцелуй. Назовите его.
-        </div>
+        <div>{activQuestion.question}</div>
         <div className={cl.block}>
           {' '}
-          <input type="text" className={cl.myInput} />
+          <input
+            onChange={handleInput}
+            value={inputValue.answer}
+            name="answer"
+            type="text"
+            className={cl.myInput}
+          />
           <div>
             {' '}
-            <img className={cl.img} src="/img/send.png" alt="ответить" />
+            <img
+              onClick={checkedAnswer}
+              className={cl.img}
+              src="/img/send.png"
+              alt="ответить"
+            />
           </div>
         </div>
-        <p>верно/неверно</p>
+        {validAnswer !== null && (
+          <>
+            {validAnswer ? (
+              <div>
+                <img src="/img/true.png" alt="верно" />
+              </div>
+            ) : (
+              <div>
+                <img src="/img/false.png" alt="неверно" />
+              </div>
+            )}
+          </>
+        )}
       </div>
     </div>
   );
