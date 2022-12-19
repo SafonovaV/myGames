@@ -88,4 +88,18 @@ route.put('/decscoreAndstatus', async (req, res) => {
   }
 });
 
+route.delete('/', async (req, res) => {
+  try {
+    const { user } = req.session;
+    for (let i = 1; i <= 20; i += 1) {
+      await User_question.destroy({
+        where: { user_id: user.id, question_id: i },
+      });
+    }
+    res.sendStatus(200);
+  } catch (error) {
+    console.log(error);
+  }
+});
+
 module.exports = route;
