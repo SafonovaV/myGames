@@ -7,11 +7,10 @@ import {
   setErrAuthTrueAC,
   setErrAuthFalseAC,
 } from '../../store/errorAuth/creators';
-import cl from './Signup.module.css';
+import cl from './Login.module.css';
 
-function Signup() {
+export default function Login() {
   const [formValue, setFormValue] = useState({
-    login: '',
     email: '',
     password: '',
   });
@@ -20,15 +19,14 @@ function Signup() {
   const errorAuth = useSelector((store) => store.errorAuth.errorAuth);
   const auth = async (e) => {
     e.preventDefault();
-    const { login, password, email } = e.target;
-    const response = await fetch('http://localhost:3100/signup', {
+    const { password, email } = e.target;
+    const response = await fetch('http://localhost:3100/login', {
       method: 'POST',
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        login: login.value,
         password: password.value,
         email: email.value,
       }),
@@ -54,20 +52,7 @@ function Signup() {
 
   return (
     <Form className="container" onSubmit={auth}>
-      {errorAuth && (
-        <div className={cl.error}>
-          Неправильно введены данные(пользователь с такой почтой уже существует)
-        </div>
-      )}
-      <Form.Group className="mb-3">
-        <Form.Control
-          name="login"
-          value={formValue.login}
-          onChange={handleInput}
-          type="text"
-          placeholder="Login"
-        />
-      </Form.Group>
+      {errorAuth && <div className={cl.error}>Неверный логин или паролль</div>}
       <Form.Group className="mb-3">
         <Form.Control
           name="email"
@@ -92,5 +77,3 @@ function Signup() {
     </Form>
   );
 }
-
-export default Signup;
