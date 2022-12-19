@@ -1,0 +1,17 @@
+.table {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.row {
+  display: flex;
+  border: 2px solid darkblue;
+  width: 700px;
+  gap: 50px;
+  margin-bottom: 5px;
+}
+
+.row_topic {
+  width: 250px;
+}
