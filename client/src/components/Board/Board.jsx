@@ -9,6 +9,7 @@ import { initStatusQuestions } from '../../store/statusQuestions/creators';
 import { setScore } from '../../store/UserScore/creators';
 
 import { Button, InputGroup } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 
 export default function Board() {
   const board = useSelector((store) => store.board.board);
@@ -16,6 +17,7 @@ export default function Board() {
   const status = useSelector((store) => store.status.status);
   const score = useSelector((store) => store.score.score);
   console.log('score', score);
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   useEffect(() => {
     (async () => {
@@ -47,12 +49,30 @@ export default function Board() {
     dispatch(setVisModalTrue());
     dispatch(initActivQuestion(quest));
   };
+  const destroyGame = async () => {
+    const response = await fetch('http://localhost:3100/game', {
+      method: 'DELETE',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: null,
+    });
+    if (response.ok) {
+      navigate('/');
+    }
+  };
 
   return (
     <>
       <div className={cl.boardContent}>
         <div className={cl.boardHead}>
-          <Button className={cl.bhBlock} type="button" variant="primary">
+          <Button
+            onClick={destroyGame}
+            className={cl.bhBlock}
+            type="button"
+            variant="primary"
+          >
             Остановить игру
           </Button>{' '}
           <InputGroup.Text
@@ -73,14 +93,18 @@ export default function Board() {
                     .filter((el) => el.topic_id === top.id)
                     .map((quest) => (
                       <div key={quest.id} className={cl.scoreBlock}>
-                        <div
-                          onClick={() => {
-                            getQuestion(quest);
-                          }}
-                          data-id={quest.id}
-                        >
-                          {quest.score}
-                        </div>
+                        {status.find((el) => el.question_id === quest.id)
+                          ?.status ? (
+                          <div style={{ opacity: 0.33 }}>{quest.score}</div>
+                        ) : (
+                          <div
+                            onClick={() => {
+                              getQuestion(quest);
+                            }}
+                          >
+                            {quest.score}
+                          </div>
+                        )}
                       </div>
                     ))}
                 </div>
