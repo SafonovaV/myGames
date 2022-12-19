@@ -5,6 +5,7 @@ import NavBar from './components/NavBar/NavBar';
 import Home from './components/Home/Home';
 import Signup from './components/Signup/Signup';
 import Board from './components/Board/Board'
+import Login from './components/Login/Login';
 import { initAuthAC, setNullAC } from './store/auth/creators';
 
 function App() {
@@ -34,7 +35,7 @@ function App() {
       <NavBar />
       <Routes>
         <Route path="/" element={<Home />} />
-        {/* <Route path="/login" element={<Login />} /> */}
+        <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/board" element={<Board />} />
       </Routes>
