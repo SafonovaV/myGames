@@ -7,30 +7,30 @@ module.exports = {
       'Users',
       [
         {
-          login: 'aaaa',
+          login: 'Василиса',
           password:'123',
           email: 'a@a.com',
         },
-        // {
-        //   login: 'b',
-        //   password:'123',
-        //   email: 'b@a.com',
-        // },
-        // {
-        //   login: 'c',
-        //   password:'123',
-        //   email: 'c@a.com',
-        // },
-        // {
-        //   login: 'd',
-        //   password:'123',
-        //   email: 'd@a.com',
-        // },
-        // {
-        //   login: 'w',
-        //   password:'123',
-        //   email: 'w@a.com',
-        // },
+        {
+          login: 'Петя',
+          password:'123',
+          email: 'b@a.com',
+        },
+        {
+          login: 'Сережа',
+          password:'123',
+          email: 'c@a.com',
+        },
+        {
+          login: 'Валерия',
+          password:'123',
+          email: 'd@a.com',
+        },
+        {
+          login: 'Игорь',
+          password:'123',
+          email: 'w@a.com',
+        },
       ]
     )
   },
