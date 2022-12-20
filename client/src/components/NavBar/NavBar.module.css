@@ -18,6 +18,8 @@
   padding: 0;
   list-style: none;
   height: 50px;
+  display: flex;
+  justify-content: space-around;
 }
 
 .nav_ul li {
@@ -39,6 +41,6 @@
 }
 
 .active {
-  color: rgb(218, 160, 226);
+  color: rgb(125, 206, 238);
   cursor: default;
 }
