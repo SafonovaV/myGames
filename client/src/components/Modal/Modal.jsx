@@ -99,10 +99,22 @@ export default function Modal({ timerStat, stopTimer }) {
   if (visible) {
     rootClasses.push(cl.active);
   }
-  const close = () => {
+  const close = async () => {
+    const response = await fetch('http://localhost:3100/game/changeStatus', {
+      method: 'PUT',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ activQuestion }),
+    });
+    if (response.ok) {
+      dispatch(setStatusTrue(activQuestion.id));
+      console.log('score', score);
+    }
+
     dispatch(setVisiblebtnAnswer());
     dispatch(setVisModalFalse());
-    console.log('CLOSE MODAL');
     stopTimer();
     setValidAnswer(null);
     setInputValue((pre) => {
@@ -120,20 +132,22 @@ export default function Modal({ timerStat, stopTimer }) {
               <Timer initValue={15} timeOut={timeOut} />
             </div>
           )}
-          <div className={cl.closeBtn}>
-            <img
-              onClick={close}
-              className={cl.img}
-              src="/img/close.png"
-              alt="закрыть"
-            />
-          </div>
+          {!btnAnswer && (
+            <div className={cl.closeBtn}>
+              <img
+                onClick={close}
+                className={cl.img}
+                src="/img/close.png"
+                alt="закрыть"
+              />
+            </div>
+          )}
         </div>
         <h5>Вопрос</h5>
         <h4>
           Тема: {topics.find((el) => el.id === activQuestion.topic_id)?.topic}
         </h4>
-        <p className="text-center">{activQuestion.score}{' '}баллов</p>
+        <p className="text-center">{activQuestion.score} баллов</p>
         <div className="text-center fs-4">{activQuestion.question}</div>
         <div className={cl.block}>
           {' '}

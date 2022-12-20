@@ -56,7 +56,7 @@ route.put('/scoreAndstatus', async (req, res) => {
     await userScore[0].increment({ totalScore: activQuestion.score });
     await User_question.update(
       { status: true },
-      { where: { question_id: activQuestion.id } }
+      { where: { question_id: activQuestion.id, user_id: user.id } }
     );
 
     res.sendStatus(200);
@@ -77,9 +77,23 @@ route.put('/decscoreAndstatus', async (req, res) => {
     await userScore[0].increment({ totalScore: -activQuestion.score });
     await User_question.update(
       { status: true },
-      { where: { question_id: activQuestion.id } }
+      { where: { question_id: activQuestion.id, user_id: user.id } }
     );
 
+    res.sendStatus(200);
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+route.put('/changeStatus', async (req, res) => {
+  const { user } = req.session;
+  const { activQuestion } = req.body;
+  try {
+    await User_question.update(
+      { status: true },
+      { where: { question_id: activQuestion.id, user_id: user.id } }
+    );
     res.sendStatus(200);
   } catch (error) {
     console.log(error);
