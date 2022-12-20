@@ -5,11 +5,11 @@ const morgan = require('morgan');
 const cors = require('cors');
 const path = require('path');
 require('dotenv').config();
+
 const authRouter = require('./routes/authRouter');
-
 const statRouter = require('./routes/statRouter');
-
 const board = require('./routes/board');
+const gameRoute = require('./routes/gameRoute');
 
 //импорт вспомогательных ф-й
 const dbCheck = require('../db/dbCheck');
@@ -51,9 +51,9 @@ const sessionConfig = {
 // мидлварка для сессии
 app.use(session(sessionConfig));
 app.use('/', authRouter);
-app.use('/statistic', statRouter)
+app.use('/statistic', statRouter);
 app.use('/boardApi', board);
-
+app.use('/game', gameRoute);
 
 const PORT = process.env.PORT || 3101;
 app.listen(PORT, (err) => {
