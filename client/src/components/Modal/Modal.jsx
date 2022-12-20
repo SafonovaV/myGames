@@ -5,13 +5,18 @@ import { setVisModalFalse } from '../../store/modal/creators';
 import { setStatusTrue } from '../../store/statusQuestions/creators';
 import Timer from '../Timer/Timer';
 import { incrementScore, decrementScore } from '../../store/UserScore/creators';
-
+import {
+  setUnVisiblebtnAnswer,
+  setVisiblebtnAnswer,
+} from '../../store/btnAnswer/creators';
 
 export default function Modal({ timerStat, stopTimer }) {
-  console.log("▶ ⇛ timerStat", timerStat);
+  console.log('▶ ⇛ timerStat', timerStat);
   const rootClasses = [cl.myModal];
   const visible = useSelector((store) => store.modal.modal.visible);
   const activQuestion = useSelector((store) => store.modal.modal.activQuestion);
+  const btnAnswer = useSelector((store) => store.btnAnswer.btnAnswer);
+  const topics = useSelector((store) => store.board.topics);
 
   const score = useSelector((store) => store.score.score);
   const dispatch = useDispatch();
@@ -24,6 +29,7 @@ export default function Modal({ timerStat, stopTimer }) {
   };
   async function timeOut() {
     setValidAnswer(false);
+    dispatch(setUnVisiblebtnAnswer());
     const response = await fetch(
       'http://localhost:3100/game/decscoreAndstatus',
       {
@@ -42,13 +48,13 @@ export default function Modal({ timerStat, stopTimer }) {
     }
   }
 
-
   useEffect(() => {
-    console.log("USEEFFECT MODAL MOUNT");
-    return () => console.log("USEEFFECT MODAL UN---MOUNT");
-  }, [])
+    console.log('USEEFFECT MODAL MOUNT');
+    return () => console.log('USEEFFECT MODAL UN---MOUNT');
+  }, []);
   const checkedAnswer = async () => {
-    stopTimer()
+    dispatch(setUnVisiblebtnAnswer());
+    stopTimer();
     if (
       inputValue.answer.toLowerCase().trim() ===
       activQuestion.answer.toLowerCase().trim()
@@ -94,24 +100,27 @@ export default function Modal({ timerStat, stopTimer }) {
     rootClasses.push(cl.active);
   }
   const close = () => {
+    dispatch(setVisiblebtnAnswer());
     dispatch(setVisModalFalse());
-    console.log("CLOSE MODAL");
-    stopTimer()
+    console.log('CLOSE MODAL');
+    stopTimer();
     setValidAnswer(null);
     setInputValue((pre) => {
       return { ...pre, answer: '' };
     });
-
   };
   return (
     <div className={rootClasses.join(' ')}>
       <div className={cl.myModalContent}>
         <div className={cl.block1}>
           {/* <div>Таймер 30 секунд</div> */}
-          {timerStat &&
-            <div className={cl.timerBlock}> <Timer initValue={15} timeOut={timeOut} /></div>
-          }
-          <div>
+          {timerStat && (
+            <div className={cl.timerBlock}>
+              {' '}
+              <Timer initValue={15} timeOut={timeOut} />
+            </div>
+          )}
+          <div className={cl.closeBtn}>
             <img
               onClick={close}
               className={cl.img}
@@ -120,7 +129,10 @@ export default function Modal({ timerStat, stopTimer }) {
             />
           </div>
         </div>
-        <h4>Вопрос:</h4>
+        <h5>Вопрос:</h5>
+        <h4>
+          Тема: {topics.find((el) => el.id === activQuestion.topic_id)?.topic}
+        </h4>
         <div>{activQuestion.question}</div>
         <div className={cl.block}>
           {' '}
@@ -131,15 +143,17 @@ export default function Modal({ timerStat, stopTimer }) {
             type="text"
             className={cl.myInput}
           />
-          <div>
-            {' '}
-            <img
-              onClick={checkedAnswer}
-              className={cl.img}
-              src="/img/send.png"
-              alt="ответить"
-            />
-          </div>
+          {btnAnswer && (
+            <div>
+              {' '}
+              <img
+                onClick={checkedAnswer}
+                className={cl.img}
+                src="/img/send.png"
+                alt="ответить"
+              />
+            </div>
+          )}
         </div>
         {validAnswer !== null && (
           <>
