@@ -20,7 +20,7 @@ router.get('/', async (req, res) => {
 try {
   const user = req.session.user
   const allStatistics = await Statistic.findAll({ where: { user_id: user.id}, order: [['id','DESC']], raw: true });
-  console.log('🚀 ~ allStatistics', allStatistics)
+  // console.log('🚀 ~ allStatistics', allStatistics)
   
   res.json({ allStatistics })
 } catch (error) {
