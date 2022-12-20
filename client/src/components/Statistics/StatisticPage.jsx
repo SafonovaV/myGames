@@ -42,7 +42,7 @@ function StatisticPage() {
         <BackButton>Назад</BackButton>
         {statistic !== null && statistic.length > 0 ? (
           <div>
-            <h1 className="text-center">Статистика</h1>
+            <h1 className="text-center card-title">Статистика</h1>
             <table className="table table-striped table-bordered border-primary">
               <thead>
                 <tr className="table-primary">

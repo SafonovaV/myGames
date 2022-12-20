@@ -7,7 +7,7 @@
   display: block;
   height: 50px;
   width: 100%;
-  background: black;
+  background: rgb(54, 54, 54);
   position: absolute;
   left: 0;
   z-index: -1;
