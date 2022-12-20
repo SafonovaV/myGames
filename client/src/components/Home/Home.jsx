@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { initStatusQuestions } from '../../store/statusQuestions/creators';
 import { setScore } from '../../store/UserScore/creators';
-import cl from './styles.css';
+import cl from './Home.module.css';
 import logo from './logo.png';
 
 export default function Home() {
@@ -30,6 +30,7 @@ export default function Home() {
   };
 
   return (
+
     <>
       <div className="container px-4 px-lg-5">
         <div className="row gx-4 gx-lg-5 align-items-center my-5">
@@ -92,14 +93,42 @@ export default function Home() {
                 <h4 className="card-title">Разное</h4>
                 <p className="card-text">Вопросы на разнообразную тематику</p>
               </div>
-            </div>
-          </div>
-          <div className="col-md-3 mb-5">
-            <div className="card h-100">
-              <div className="card-body">
-                <h4 className="card-title">Любителям истории</h4>
-                <p className="card-text">Исторические вопросы</p>
-              </div>
+            </div>            
+            <div className="row gx-4 gx-lg-5">
+                <div className="col-md-3 mb-5">
+                    <div className="card h-100">
+                        <div className="card-body">
+                            <h4 className="card-title">Ох уж эти нравы!</h4>
+                            <p className="card-text">Тематика разных народов в мировой истории</p>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div className="col-md-3 mb-5">
+                    <div className="card h-100">
+                        <div className="card-body">
+                            <h4 className="card-title">Популярные цитаты</h4>
+                            <p className="card-text">Цитаты известных людей!</p>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div className="col-md-3 mb-5">
+                    <div className="card h-100">
+                        <div className="card-body">
+                            <h4 className="card-title">Разное</h4>
+                            <p className="card-text">Вопросы на разнообразную тематику</p>
+                        </div>                        
+                    </div>
+                </div>
+                <div className="col-md-3 mb-5">
+                    <div className="card h-100">
+                        <div className="card-body">
+                            <h4 className="card-title">Любителям истории</h4>
+                            <p className="card-text">Исторические вопросы</p>
+                        </div>                        
+                    </div>
+                </div>
             </div>
           </div>
         </div>
@@ -111,7 +140,10 @@ export default function Home() {
             Copyright &copy; Эльбрус Медвели олайн 2022
           </p>
         </div>
-      </footer>
+
+        <footer className="py-5 footer align-self-end">
+            <div className="container px-4 px-lg-5"><p className="m-0 text-center text-white">Copyright &copy; Эльбрус Медвели олайн 2022</p></div>
+        </footer> 
     </>
   );
 }
