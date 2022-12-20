@@ -6,6 +6,7 @@ import Home from './components/Home/Home';
 import Signup from './components/Signup/Signup';
 import Board from './components/Board/Board'
 import Login from './components/Login/Login';
+import Top from './components/Top/Top';
 import { initAuthAC, setNullAC } from './store/auth/creators';
 import StatisticPage from './components/Statistics/StatisticPage';
 import Footer from './components/Footer/Footer';
@@ -42,6 +43,7 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/statistic" element={<StatisticPage />} />
         <Route path="/board" element={<Board />} />
+        <Route path="/top" element={<Top />} />
 
       </Routes>
       <Footer />

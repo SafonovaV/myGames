@@ -39,6 +39,12 @@ export default function NavBar() {
               Личный кабинет
             </NavLink>
           </li>{' '}
+          <li>
+            {' '}
+            <NavLink to="/top" className={cl.nav_navLink}>
+              Top
+            </NavLink>
+          </li>{' '}
           <li className={cl.nav_navLink}> Привет, {isAuth.name}!</li>{' '}
           <li>
             <NavLink onClick={logout} to="/signup" className={cl.nav_navLink}>
