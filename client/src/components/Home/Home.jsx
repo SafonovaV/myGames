@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { initStatusQuestions } from '../../store/statusQuestions/creators';
 import { setScore } from '../../store/UserScore/creators';
-import cl from './styles.css';
+import cl from './Home.module.css';
 import logo from './logo.png';
 
 export default function Home() {
@@ -28,14 +28,14 @@ export default function Home() {
   };
 
   return (
-    <>
+    <>    
      <div className="container px-4 px-lg-5">
             
             <div className="row gx-4 gx-lg-5 align-items-center my-5">
                 <div className="col-lg-7"><img className="img-fluid rounded mb-4 mb-lg-0" src={logo} alt="logo" /></div>
                 <div className="col-lg-5">
-                    <h1 className={cl["font-weight-light"]}>Своя Игра</h1>
-                    <p>Суть игры заключается в том, что участник отвечает на вопросы различной стоимости, и тематики патаясь набрать большее кол-во баллов.</p>
+                    <h1 className="font-weight-light">Своя Игра</h1>
+                    <p className={cl.testP}>Суть игры заключается в том, что участник отвечает на вопросы различной стоимости, и тематики патаясь набрать большее кол-во баллов.</p>
                     <button type="button " className="btn btn-primary" onClick={() => startGame()}>
                         Играть
                       </button>
@@ -51,7 +51,7 @@ export default function Home() {
                     <div className="card h-100">
                         <div className="card-body">
                             <h4 className="card-title">Ох уж эти нравы!</h4>
-                            <p className="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                            <p className="card-text">Тематика разных народов в мировой истории</p>
                         </div>
                         
                     </div>
@@ -83,11 +83,9 @@ export default function Home() {
                 </div>
             </div>
         </div>
-        
-        <footer className="py-5 bg-dark">
+        <footer className="py-5 footer align-self-end">
             <div className="container px-4 px-lg-5"><p className="m-0 text-center text-white">Copyright &copy; Эльбрус Медвели олайн 2022</p></div>
-        </footer>
-      
+        </footer>    
     </>
   );
 }
