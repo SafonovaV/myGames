@@ -1,64 +1,62 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-function BackButton() {
-  const navigate = useNavigate();
-  return (
-    <button
-      type="button"
-      className="btn btn-primary"
-      onClick={() => {
-        navigate(-1);
-      }}
-    >
-      Назад
-    </button>
-  );
-}
-
 function parseDate(createdAt) {
   const date = new Date(Date.parse(createdAt));
   return date;
 }
 
-function StatisticPage() {
-  const [statistic, setStatistic] = useState(null);
+function Top() {
+  const [allTop, setAllTop] = useState([]);
 
   useEffect(() => {
     (async () => {
-      const response = await fetch('http://localhost:3100/statistic', {
+      const response = await fetch('http://localhost:3100/boardApi/stat', {
         method: 'GET',
         credentials: 'include', //куки
+        headers: {
+          'Content-Type': 'application/json',
+        },
       });
-      const { allStatistics } = await response.json();
-      setStatistic(allStatistics);
-      // console.log(statistic);
+      const allRaiting = await response.json();
+      console.log("statistic ", allRaiting);
+      setAllTop(allRaiting)
     })();
   }, []);
 
   return (
     <>
-      <div className="container-sm mb-5 pb-5">
-        <BackButton>Назад</BackButton>
-        {statistic !== null && statistic.length > 0 ? (
+      <div className="container-sm w-50">
+        {allTop?.length > 0 ? (
           <div>
-            <h1 className="text-center card-title">Статистика</h1>
+            <h1 className="text-center">Top 5 игроков</h1>
             <table className="table table-striped table-bordered border-primary">
               <thead>
                 <tr className="table-primary">
                   {/* <th>ID пользователя</th> */}
-                  <th>Общее количество очков</th>
-                  <th>Дата</th>
+                  <th>Имя</th>
+                  <th>Лучшая игра</th>
                 </tr>
               </thead>
               <tbody>
-                {statistic.map((item) => (
-                  <tr key={item.id}>
+                {allTop.map((item) => (
+                  <tr key={item.user_id}>
                     {/* <td>{item.user_id}</td> */}
+                    <td>{item['User.login']}</td>
+                    <td>{item.max}</td>
+                  </tr>
+                ))}
+              </tbody>
+              <tbody>
+
+                {/* {statistic.map((item) => (
+                  <tr key={item.id}>
+                    
                     <td>{item.totalScore}</td>
                     <td>{parseDate(item.createdAt).toLocaleString()}</td>
                   </tr>
-                ))}
+                ))} */}
+
               </tbody>
             </table>
           </div>
@@ -70,4 +68,4 @@ function StatisticPage() {
   );
 }
 
-export default StatisticPage;
+export default Top;
