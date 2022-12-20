@@ -16,7 +16,7 @@ export default function statusQuestions(state = initialState, action) {
 
         status: state.status.map((el) => {
           if (el.question_id === action.payload) {
-            el.status = true;
+            return { ...el, status: true };
           }
           return el;
         }),

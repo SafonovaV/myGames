@@ -1,14 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import cl from './Modal.module.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { setVisModalFalse } from '../../store/modal/creators';
 import { setStatusTrue } from '../../store/statusQuestions/creators';
+import Timer from '../Timer/Timer';
 import { incrementScore, decrementScore } from '../../store/UserScore/creators';
 
-export default function Modal() {
+
+export default function Modal({ timerStat, stopTimer }) {
+  console.log("▶ ⇛ timerStat", timerStat);
   const rootClasses = [cl.myModal];
   const visible = useSelector((store) => store.modal.modal.visible);
   const activQuestion = useSelector((store) => store.modal.modal.activQuestion);
+
   const score = useSelector((store) => store.score.score);
   const dispatch = useDispatch();
   const [inputValue, setInputValue] = useState({ answer: '' });
@@ -18,7 +22,10 @@ export default function Modal() {
       return { ...pre, answer: e.target.value };
     });
   };
-
+  useEffect(() => {
+    console.log("USEEFFECT MODAL MOUNT");
+    return () => console.log("USEEFFECT MODAL UN---MOUNT");
+  }, [])
   const checkedAnswer = async () => {
     if (
       inputValue.answer.toLowerCase().trim() ===
@@ -66,16 +73,22 @@ export default function Modal() {
   }
   const close = () => {
     dispatch(setVisModalFalse());
+    console.log("CLOSE MODAL");
+    stopTimer()
     setValidAnswer(null);
     setInputValue((pre) => {
       return { ...pre, answer: '' };
     });
+
   };
   return (
     <div className={rootClasses.join(' ')}>
       <div className={cl.myModalContent}>
         <div className={cl.block1}>
-          <div>Таймер 30 секунд</div>
+          {/* <div>Таймер 30 секунд</div> */}
+          {timerStat &&
+            <div className={cl.timerBlock}> <Timer initValue={30} /></div>
+          }
           <div>
             <img
               onClick={close}

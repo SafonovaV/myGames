@@ -9,13 +9,22 @@ import { initStatusQuestions } from '../../store/statusQuestions/creators';
 import { setScore } from '../../store/UserScore/creators';
 
 import { Button, InputGroup } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
 
 export default function Board() {
   const board = useSelector((store) => store.board.board);
   const topics = useSelector((store) => store.board.topics);
   const status = useSelector((store) => store.status.status);
   const score = useSelector((store) => store.score.score);
+
+  const [timerStat, setTimerStat] = useState(false)// состояние таймера
+
+  function startTimer() {
+    setTimerStat(true)
+  }
+
+  function stopTimer() {
+    setTimerStat(false)
+  }
   console.log('score', score);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -85,37 +94,31 @@ export default function Board() {
         </div>
         {board.length && topics.length ? (
           <div className={cl.tableWrap}>
-            <div className={cl.table}>
-              {topics.map((top) => (
-                <div key={top.id} className={cl.tableRow}>
-                  <div className={cl.row_topic}>{top.topic}</div>
-                  {board
-                    .filter((el) => el.topic_id === top.id)
-                    .map((quest) => (
-                      <div key={quest.id} className={cl.scoreBlock}>
-                        {status.find((el) => el.question_id === quest.id)
-                          ?.status ? (
-                          <div style={{ opacity: 0.33 }}>{quest.score}</div>
-                        ) : (
-                          <div
-                            onClick={() => {
-                              getQuestion(quest);
-                            }}
-                          >
-                            {quest.score}
-                          </div>
-                        )}
-                      </div>
-                    ))}
-                </div>
-              ))}
+        <div className={cl.table}>
+          {topics.map((top) => (
+            <div key={top.id} className={cl.tableRow}>
+              <div className={cl.row_topic}>{top.topic}</div>
+              {board
+                .filter((el) => el.topic_id === top.id)
+                .map((quest) => (
+
+                  <div className={cl.scoreBlock}>
+                  <div  onClick={() => {
+                      getQuestion(quest);
+                    }} key={quest.id} data-id={quest.id}>
+
+                    {quest.score}
+                  </div>
+
+                  </div>
+                ))}
             </div>
           </div>
         ) : (
           <div>Масиив пустой</div>
         )}
 
-        <Modal />
+      <Modal />
       </div>
     </>
   );

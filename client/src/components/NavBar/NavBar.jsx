@@ -27,13 +27,19 @@ export default function NavBar() {
     <nav className={cl.nav}>
       {isAuth ? (
         <ul className={cl.nav_ul}>
-          {' '}
+          <li>
+            {' '}
+            <NavLink to="/" className={cl.nav_navLink}>
+              Главная{' '}
+            </NavLink>
+          </li>{' '}
           <li>
             {' '}
             <NavLink to="/statistic" className={cl.nav_navLink}>
-              Статистика, {isAuth.name}
+              Личный кабинет
             </NavLink>
           </li>{' '}
+          <li className={cl.nav_navLink}> Привет, {isAuth.name}!</li>{' '}
           <li>
             <NavLink onClick={logout} to="/signup" className={cl.nav_navLink}>
               Выйти
