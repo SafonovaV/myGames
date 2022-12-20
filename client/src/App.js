@@ -8,6 +8,7 @@ import Board from './components/Board/Board'
 import Login from './components/Login/Login';
 import { initAuthAC, setNullAC } from './store/auth/creators';
 import StatisticPage from './components/Statistics/StatisticPage';
+import Footer from './components/Footer/Footer';
 
 function App() {
   const dispatch = useDispatch();
@@ -43,6 +44,7 @@ function App() {
         <Route path="/board" element={<Board />} />
 
       </Routes>
+      <Footer />
     </>
   );
 }
