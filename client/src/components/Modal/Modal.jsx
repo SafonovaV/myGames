@@ -22,11 +22,33 @@ export default function Modal({ timerStat, stopTimer }) {
       return { ...pre, answer: e.target.value };
     });
   };
+  async function timeOut() {
+    setValidAnswer(false);
+    const response = await fetch(
+      'http://localhost:3100/game/decscoreAndstatus',
+      {
+        method: 'PUT',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ activQuestion }),
+      }
+    );
+    if (response.ok) {
+      dispatch(decrementScore(activQuestion.score));
+      dispatch(setStatusTrue(activQuestion.id));
+      console.log('score', score);
+    }
+  }
+
+
   useEffect(() => {
     console.log("USEEFFECT MODAL MOUNT");
     return () => console.log("USEEFFECT MODAL UN---MOUNT");
   }, [])
   const checkedAnswer = async () => {
+    stopTimer()
     if (
       inputValue.answer.toLowerCase().trim() ===
       activQuestion.answer.toLowerCase().trim()
@@ -87,7 +109,7 @@ export default function Modal({ timerStat, stopTimer }) {
         <div className={cl.block1}>
           {/* <div>Таймер 30 секунд</div> */}
           {timerStat &&
-            <div className={cl.timerBlock}> <Timer initValue={30} /></div>
+            <div className={cl.timerBlock}> <Timer initValue={15} timeOut={timeOut} /></div>
           }
           <div>
             <img
