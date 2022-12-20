@@ -24,7 +24,7 @@ export default function NavBar() {
   };
 
   return (
-    <nav className={cl.nav}>
+    <nav className={[cl.nav, cl.forBoard].join('')}>
       {isAuth ? (
         <ul className={cl.nav_ul}>
           <li>

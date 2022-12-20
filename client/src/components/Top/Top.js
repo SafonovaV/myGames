@@ -26,7 +26,7 @@ function Top() {
 
   return (
     <>
-      <div className="container-sm">
+      <div className="container-sm w-50">
         {allTop?.length > 0 ? (
           <div>
             <h1 className="text-center">Top 5 игроков</h1>

@@ -38,7 +38,7 @@ function StatisticPage() {
 
   return (
     <>
-      <div className="container-sm">
+      <div className="container-sm mb-5 pb-5">
         <BackButton>Назад</BackButton>
         {statistic !== null && statistic.length > 0 ? (
           <div>

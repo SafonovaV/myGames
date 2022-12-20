@@ -66,6 +66,7 @@ export default function Board() {
   return (
     <>
       <div className={cl.boardContent}>
+        <div className={cl.boardWrap}>
         <div className={cl.boardHead}>
           <Button
             onClick={destroyGame}
@@ -110,12 +111,14 @@ export default function Board() {
                 </div>
               ))}
             </div>
+
           </div>
         ) : (
           <div>Масиив пустой</div>
         )}
 
         <Modal />
+      </div>
       </div>
     </>
   );
