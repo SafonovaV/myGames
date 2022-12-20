@@ -3,6 +3,7 @@
   margin: 0 auto 50px;
   
 }
+
 .nav:before {
   content: '';
   display: block;

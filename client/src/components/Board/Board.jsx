@@ -77,6 +77,7 @@ export default function Board() {
   return (
     <>
       <div className={cl.boardContent}>
+        <div className={cl.boardWrap}>
         <div className={cl.boardHead}>
           <Button
             onClick={destroyGame}
@@ -127,6 +128,7 @@ export default function Board() {
         )}
 
         <Modal timerStat={timerStat} stopTimer={stopTimer} />
+      </div>
       </div>
     </>
   );

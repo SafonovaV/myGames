@@ -35,9 +35,9 @@ export default function Home() {
 
   return (
     <>    
-     <div className="container px-4 px-lg-5">            
+          <div className="container px-4 px-lg-5 mb-5">            
             <div className="row gx-4 gx-lg-5 align-items-center my-5">
-                <div className="col-lg-7"><img className="img-fluid rounded mb-4 mb-lg-0" src={logo} alt="logo" /></div>
+                  <div className="col-lg-7"><img className="img-fluid rounded mb-4 mb-lg-0 anim" src={logo} alt="logo" /></div>
                 <div className="col-lg-5">
                     <h1 className="font-weight-light">Своя Игра</h1>
                     <p className="card-text fs-4">Суть игры заключается в том, что участник отвечает на вопросы различной стоимости, и тематики патаясь набрать большее кол-во баллов.</p>
