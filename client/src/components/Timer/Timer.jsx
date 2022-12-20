@@ -6,6 +6,7 @@ function Timer({ initValue, setStat, timeOut }) {
 
   const [currentTime, setCurrentTime] = useState(initValue)
 
+  
 
   let totalTime = initValue
   let timeValue = (100 - (currentTime / totalTime) * 100)

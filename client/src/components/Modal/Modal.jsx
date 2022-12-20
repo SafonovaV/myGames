@@ -119,7 +119,7 @@ export default function Modal({ timerStat, stopTimer }) {
               <Timer initValue={15} timeOut={timeOut} />
             </div>
           )}
-          <div>
+          <div className={cl.closeBtn}>
             <img
               onClick={close}
               className={cl.img}

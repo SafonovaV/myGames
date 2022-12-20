@@ -30,7 +30,12 @@
   width: 400px;
   padding: 5px 15px;
   margin: 5px 0;
-  border: 3px solid rgb(106, 165, 241);
+  border: 1px solid rgb(106, 165, 241);
+  outline: none;
+  border-radius: 5px;
+}
+.myInput:focus {
+  box-shadow: 5px 4px 19px -2px rgba(8, 132, 227, 0.31);
 }
 
 .block {
@@ -46,6 +51,8 @@
   align-items: center;
   gap: 350px;
   margin-bottom: 60px;
+  position: relative;
+  min-width: 500px;
 }
 
 .img {
@@ -53,4 +60,10 @@
 }
 .timerBlock {
   width: 12%;
+}
+
+.closeBtn {
+  position: absolute;
+  top: 0;
+  right: 0;
 }
