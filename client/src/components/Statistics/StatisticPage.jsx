@@ -36,10 +36,23 @@ function StatisticPage() {
     })();
   }, []);
 
+  const xlsxFile = async () => {
+    await fetch('http://localhost:3100/statistic/xlsx', {
+      method: 'GET',
+      credentials: 'include', //куки
+    })
+      .then((response) => response.blob())
+      .then((blob) => downloadjs(blob, data.filename));
+  };
+
   return (
     <>
       <div className="container-sm">
         <BackButton>Назад</BackButton>
+        <a href={}>
+          {' '}
+          <button onClick={xlsxFile}>Выгрузить</button>
+        </a>
         {statistic !== null && statistic.length > 0 ? (
           <div>
             <h1 className="text-center card-title">Статистика</h1>
