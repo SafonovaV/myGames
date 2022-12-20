@@ -3,14 +3,16 @@ import cl from './Modal.module.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { setVisModalFalse } from '../../store/modal/creators';
 import { setStatusTrue } from '../../store/statusQuestions/creators';
-import { incrementScore } from '../../store/UserScore/creators';
 import Timer from '../Timer/Timer';
+import { incrementScore, decrementScore } from '../../store/UserScore/creators';
+
 
 export default function Modal({ timerStat, stopTimer }) {
   console.log("▶ ⇛ timerStat", timerStat);
   const rootClasses = [cl.myModal];
   const visible = useSelector((store) => store.modal.modal.visible);
   const activQuestion = useSelector((store) => store.modal.modal.activQuestion);
+  const score = useSelector((store) => store.score.score);
   const dispatch = useDispatch();
   const [inputValue, setInputValue] = useState({ answer: '' });
   const [validAnswer, setValidAnswer] = useState(null);
@@ -37,12 +39,30 @@ export default function Modal({ timerStat, stopTimer }) {
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify(activQuestion),
+          body: JSON.stringify({ activQuestion }),
         }
       );
       if (response.ok) {
-        dispatch(setStatusTrue(activQuestion.id));
         dispatch(incrementScore(activQuestion.score));
+        dispatch(setStatusTrue(activQuestion.id));
+      }
+    } else {
+      setValidAnswer(false);
+      const response = await fetch(
+        'http://localhost:3100/game/decscoreAndstatus',
+        {
+          method: 'PUT',
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ activQuestion }),
+        }
+      );
+      if (response.ok) {
+        dispatch(decrementScore(activQuestion.score));
+        dispatch(setStatusTrue(activQuestion.id));
+        console.log('score', score);
       }
     }
   };
@@ -54,6 +74,11 @@ export default function Modal({ timerStat, stopTimer }) {
     dispatch(setVisModalFalse());
     console.log("CLOSE MODAL");
     stopTimer()
+    setValidAnswer(null);
+    setInputValue((pre) => {
+      return { ...pre, answer: '' };
+    });
+
   };
   return (
     <div className={rootClasses.join(' ')}>
@@ -61,7 +86,7 @@ export default function Modal({ timerStat, stopTimer }) {
         <div className={cl.block1}>
           {/* <div>Таймер 30 секунд</div> */}
           {timerStat &&
-            <div className={cl.timerBlock}> <Timer initValue={30} /></div>     
+            <div className={cl.timerBlock}> <Timer initValue={30} /></div>
           }
           <div>
             <img

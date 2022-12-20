@@ -9,8 +9,6 @@ import { initStatusQuestions } from '../../store/statusQuestions/creators';
 import { setScore } from '../../store/UserScore/creators';
 
 import { Button, InputGroup } from 'react-bootstrap';
-import { useState } from 'react';
-
 
 export default function Board() {
   const board = useSelector((store) => store.board.board);
@@ -28,6 +26,7 @@ export default function Board() {
     setTimerStat(false)
   }
   console.log('score', score);
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   useEffect(() => {
     (async () => {
@@ -59,20 +58,41 @@ export default function Board() {
     dispatch(setVisModalTrue());
     dispatch(initActivQuestion(quest));
   };
+  const destroyGame = async () => {
+    const response = await fetch('http://localhost:3100/game', {
+      method: 'DELETE',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: null,
+    });
+    if (response.ok) {
+      navigate('/');
+    }
+  };
 
   return (
     <>
-
       <div className={cl.boardContent}>
         <div className={cl.boardHead}>
-          <Button className={cl.bhBlock} type="button" variant="primary">Остановить игру</Button>{' '}
-          <InputGroup.Text className={cl.bhBlock} id="inputGroup-sizing-default">
+          <Button
+            onClick={destroyGame}
+            className={cl.bhBlock}
+            type="button"
+            variant="primary"
+          >
+            Остановить игру
+          </Button>{' '}
+          <InputGroup.Text
+            className={cl.bhBlock}
+            id="inputGroup-sizing-default"
+          >
             Очков: {score}
           </InputGroup.Text>
           {/* <input defaultValue="Очков: 2100" className={cl.bhBlock} /> */}
-
-      </div>
-      {board.length && topics.length ? (
+        </div>
+        {board.length && topics.length ? (
           <div className={cl.tableWrap}>
         <div className={cl.table}>
           {topics.map((top) => (
@@ -85,7 +105,6 @@ export default function Board() {
                   <div className={cl.scoreBlock}>
                   <div  onClick={() => {
                       getQuestion(quest);
-                      startTimer()
                     }} key={quest.id} data-id={quest.id}>
 
                     {quest.score}
@@ -94,15 +113,12 @@ export default function Board() {
                   </div>
                 ))}
             </div>
-          ))}
-        </div>
           </div>
+        ) : (
+          <div>Масиив пустой</div>
+        )}
 
-      ) : (
-        <div>Масиив пустой</div>
-      )}
-
-        <Modal timerStat={timerStat} stopTimer={stopTimer} />
+      <Modal />
       </div>
     </>
   );
