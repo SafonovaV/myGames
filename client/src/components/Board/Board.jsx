@@ -125,36 +125,6 @@ export default function Board() {
         ) : (
           <div>Масиив пустой</div>
         )}
-        {/* {board.length && topics.length ? (
-          <div className={cl.tableWrap}>
-        <div className={cl.table}>
-          {topics.map((top) => (
-
-            <div key={top.id} className={cl.tableRow}>
-              <div className={cl.row_topic}>{top.topic}</div>
-
-              {board
-                .filter((el) => el.topic_id === top.id)
-                .map((quest) => (
-
-                  <div className={cl.scoreBlock}>
-                  <div  onClick={() => {
-                      getQuestion(quest);
-                    }} key={quest.id} data-id={quest.id}>
-
-                    {quest.score}
-                  </div>
-
-                  </div>
-
-                ))}
-
-            </div>
-
-
-        ) : (
-          <div>Масиив пустой</div>
-        )} */}
 
         <Modal timerStat={timerStat} stopTimer={stopTimer} />
       </div>
