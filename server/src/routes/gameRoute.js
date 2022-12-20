@@ -19,8 +19,7 @@ route.post('/new', async (req, res) => {
     const arrStatusQuestions = await User_question.findAll({
       where: { user_id: user.id },
     });
-    console.log('arrStatusQuestions', arrStatusQuestions);
-    console.log('userScore', userScore);
+
     res.json({ arrStatusQuestions, userScore });
   } catch (error) {
     console.log(error);
@@ -35,7 +34,6 @@ route.get('/', async (req, res) => {
       order: [['createdAt', 'DESC']],
     });
     const userScore = allUserScore[0];
-    console.log('userScore ==========>', allUserScore);
 
     const arrStatusQuestions = await User_question.findAll({
       where: { user_id: user.id },
@@ -60,7 +58,7 @@ route.put('/scoreAndstatus', async (req, res) => {
       { status: true },
       { where: { question_id: activQuestion.id } }
     );
-    console.log('userScore', userScore);
+
     res.sendStatus(200);
   } catch (error) {
     console.log(error);
@@ -81,7 +79,7 @@ route.put('/decscoreAndstatus', async (req, res) => {
       { status: true },
       { where: { question_id: activQuestion.id } }
     );
-    console.log('userScore', userScore);
+
     res.sendStatus(200);
   } catch (error) {
     console.log(error);
