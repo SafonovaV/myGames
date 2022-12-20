@@ -59,7 +59,7 @@ export default function Home() {
                             <p className="card-text text-center">Традиции народов мира!</p> 
 
                             <figure className="figure">
-                                <img src={traditional} className="card-img-top figure-img img-fluid rounded" />
+                                <img src={traditional} className="card-img-top figure-img img-fluid rounded " />
                             </figure>
 
                         </div>                        
