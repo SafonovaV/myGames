@@ -9,6 +9,7 @@ export default function Modal() {
   const rootClasses = [cl.myModal];
   const visible = useSelector((store) => store.modal.modal.visible);
   const activQuestion = useSelector((store) => store.modal.modal.activQuestion);
+
   const score = useSelector((store) => store.score.score);
   const dispatch = useDispatch();
   const [inputValue, setInputValue] = useState({ answer: '' });
