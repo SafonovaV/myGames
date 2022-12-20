@@ -129,11 +129,12 @@ export default function Modal({ timerStat, stopTimer }) {
             />
           </div>
         </div>
-        <h5>Вопрос:</h5>
+        <h5>Вопрос</h5>
         <h4>
           Тема: {topics.find((el) => el.id === activQuestion.topic_id)?.topic}
         </h4>
-        <div>{activQuestion.question}</div>
+        <p className="text-center">{activQuestion.score}{' '}баллов</p>
+        <div className="text-center fs-4">{activQuestion.question}</div>
         <div className={cl.block}>
           {' '}
           <input
