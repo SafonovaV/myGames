@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 
-function Timer({ initValue, setStat }) {
+function Timer({ initValue, setStat, timeOut }) {
 
   const [currentTime, setCurrentTime] = useState(initValue)
   let totalTime = initValue
@@ -10,22 +10,51 @@ function Timer({ initValue, setStat }) {
 
   useEffect(() => {
     if (currentTime === 0) {
-      setCurrentTime(0);
-      setTimeout(() => {
-        // setStat(false)
-        return
-      }, 1000)
-    } else {
-      const timer = setTimeout(() => {
-        setCurrentTime((value) => {
-          value = value - 1
-          return value
-        })
-      }, 1000);
-
-      return () => clearTimeout(timer);
+      timeOut()
     }
   }, [currentTime])
+
+  useEffect(() => {
+    if (true) {
+
+      const idInt = setInterval(() => {
+
+        setCurrentTime((num3) => {
+          if (num3 > 0) {
+            return num3 - 1;
+          }
+          clearInterval(idInt);
+          return num3;
+        });
+
+
+      }, 1000);
+
+      return (() => { clearInterval(idInt) })
+    }
+
+  }, []);
+
+  // useEffect(() => {
+  //   if (currentTime === 0) {
+  //     setCurrentTime(0);
+  //     setTimeout(() => {
+  //       // setStat(false)
+  //       return
+  //     }, 1000)
+  //   } else {
+  //     const timer = setTimeout(() => {
+  //       setCurrentTime((value) => {
+  //         value = value - 1
+  //         return value
+  //       })
+  //     }, 1000);
+
+  //     return () => clearTimeout(timer);
+  //   }
+  // }, [currentTime])
+
+
 
   // Цвет полосы
   // let lineColor = '#D91E18'// красный
