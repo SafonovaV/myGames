@@ -6,7 +6,8 @@ import { setStatusTrue } from '../../store/statusQuestions/creators';
 import { incrementScore } from '../../store/UserScore/creators';
 import Timer from '../Timer/Timer';
 
-export default function Modal() {
+export default function Modal({ timerStat, stopTimer }) {
+  console.log("▶ ⇛ timerStat", timerStat);
   const rootClasses = [cl.myModal];
   const visible = useSelector((store) => store.modal.modal.visible);
   const activQuestion = useSelector((store) => store.modal.modal.activQuestion);
@@ -51,13 +52,17 @@ export default function Modal() {
   }
   const close = () => {
     dispatch(setVisModalFalse());
+    console.log("CLOSE MODAL");
+    stopTimer()
   };
   return (
     <div className={rootClasses.join(' ')}>
       <div className={cl.myModalContent}>
         <div className={cl.block1}>
           {/* <div>Таймер 30 секунд</div> */}
-          <div className={cl.timerBlock}> <Timer initValue={30} /></div>
+          {timerStat &&
+            <div className={cl.timerBlock}> <Timer initValue={30} /></div>     
+          }
           <div>
             <img
               onClick={close}

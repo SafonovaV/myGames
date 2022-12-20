@@ -9,6 +9,7 @@ import { initStatusQuestions } from '../../store/statusQuestions/creators';
 import { setScore } from '../../store/UserScore/creators';
 
 import { Button, InputGroup } from 'react-bootstrap';
+import { useState } from 'react';
 
 
 export default function Board() {
@@ -16,6 +17,16 @@ export default function Board() {
   const topics = useSelector((store) => store.board.topics);
   const status = useSelector((store) => store.status.status);
   const score = useSelector((store) => store.score.score);
+
+  const [timerStat, setTimerStat] = useState(false)// состояние таймера
+
+  function startTimer() {
+    setTimerStat(true)
+  }
+
+  function stopTimer() {
+    setTimerStat(false)
+  }
   console.log('score', score);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -74,7 +85,7 @@ export default function Board() {
                   <div className={cl.scoreBlock}>
                   <div  onClick={() => {
                       getQuestion(quest);
-                      console.log("OPEN MODAL BUTTON");
+                      startTimer()
                     }} key={quest.id} data-id={quest.id}>
 
                     {quest.score}
@@ -91,7 +102,7 @@ export default function Board() {
         <div>Масиив пустой</div>
       )}
 
-      <Modal />
+        <Modal timerStat={timerStat} stopTimer={stopTimer} />
       </div>
     </>
   );
